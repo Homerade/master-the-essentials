@@ -3,40 +3,40 @@ import SimpleMDE from 'react-simplemde-editor';
 
 
 class Editor extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      title: '',
-      notes: []
+      note: {}
   };
-  this.intakeTitle = this.intakeTitle.bind(this);
-  this.publishNote = this.publishNote.bind(this);
+  this.handleBodyChange = this.handleBodyChange.bind(this);
   }
 
-  intakeTitle(e) {
-    this.setState({ title: e.target.value });
+  handleBodyChange(change) {
+    this.setState({ note: {body: change} })
   }
 
-  publishNote() {
-    const note = {body: this.state.title}; //need to add id to li?
-    const noteList = this.state.notes;
-    noteList.push(note);
-    this.setState({notes: noteList});
+  componentWillReceiveProps(nextProps) {
+    console.log('prop change', { 'this.props': this.props, nextProps })
+    if (this.props.noteToEdit !== nextProps.noteToEdit) {
+      console.log('noteToEdit prop changed!');
+      this.setState({ note: nextProps.noteToEdit });
+    }
+    
   }
 
   render() {
     return (
       <div className='editor column column-75'>
-      <input type='text' className='titleField' onChange={this.intakeTitle} placeholder='Title' />
+      <input type='text' className='titleField' placeholder='Title' />
       <div>
         <SimpleMDE 
-          onChange={this.props.change}
-          value="hello"
+          onChange={this.handleBodyChange} // {(change) => this.setState ({ note: { body: change }})
+          value={this.state.note.body}
           options={{
             autofocus: true
           }}
         />
-      <button className='publishBtn' onClick={this.publishNote}>Publish</button>  
+      <button className='publishBtn' onClick={() => this.props.publish(this.state.note)}>Publish</button>  
       </div>  
       </div>
 

@@ -9,10 +9,10 @@ class Sidebar extends Component {
       list.push(
         <li onClick={() => this.props.select(note)}>
           { note.body }
-        </li>  
+        </li>     
       );
     });
-
+    return list
   }
 
   // newNote() {
@@ -23,7 +23,7 @@ class Sidebar extends Component {
   render() {
     return (
       <div className="sidebar column column-25">
-       <button className='button button' onClick={this.props.add}>+ new note</button>
+       <button className='button button'>+ new note</button>
        <ul className='noteList'>
           {this.renderList()}
        </ul> 

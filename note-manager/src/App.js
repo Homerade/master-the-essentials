@@ -9,27 +9,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      title: '',
-      notes: [],
-      selectedNote: ''
+      notes: []
     };
-    this.intakeName=this.intakeName.bind(this);
-    this.publishNote=this.publishNote.bind(this);
+    this.publishNote = this.publishNote.bind(this);
+    this.selectNote = this.selectNote.bind(this);
   }
 
-  intakeName(e) {
-    console.log(e.target.value);
-    this.setState({ title: e.target.value });
-  }
-
-  publishNote() {
-    const note = {body: this.state.title}; //need to add id to li?
-    const noteList = this.state.notes;
-    noteList.push(note);
-    this.setState({notes: noteList});
+  publishNote(note) {
+    this.setState({ notes: [...this.state.notes, note] })
   }
 
   selectNote(note) {
+    console.log('select note', note);
     if (note === this.state.selectedNote) return;
     this.setState({selectedNote: note});
   }
@@ -39,8 +30,8 @@ class App extends Component {
       <div className="App container">
       <h1>Welcome</h1>         
         <div className="row">
-          <Sidebar add={this.publishNote} notes={this.state.notes} select={this.selectNote}/>
-          <Editor />          
+          <Sidebar notes={this.state.notes} select={this.selectNote}/>
+          <Editor publish={this.publishNote} noteToEdit={this.state.selectedNote}/>          
         </div>
       </div>  
     );
