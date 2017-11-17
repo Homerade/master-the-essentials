@@ -5,10 +5,10 @@ class Sidebar extends Component {
   
   renderList() {
     let list = [];
-    this.props.notes.forEach((note) => {
+    this.props.notes.forEach((note, index) => {
       list.push(
-        <li onClick={() => this.props.select(note)}>
-          { note.body }
+        <li key={index} onClick={() => this.props.select(note)}>
+          {note.body}
         </li>  
       );
     });

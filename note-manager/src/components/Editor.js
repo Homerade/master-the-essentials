@@ -5,15 +5,24 @@ class Editor extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      note: this.props.note || {}
+    };
+
+    this.handleBodyChange = this.handleBodyChange.bind(this);
+  }
+
+  handleBodyChange(body) {
+    this.setState({ note: { body: body }})
   }
 
   render() {
+    const { note = {} } = this.state;
     return (
       <div className='editor column column-75'>
         <SimpleMDE 
           onChange={(body) => this.setState({ note: { body } })}
-          value=""
+          value={note.body}
           options={{
             autofocus: true
           }}
@@ -21,10 +30,11 @@ class Editor extends Component {
         <button
           disabled={!this.state.note}
           className='publishBtn'
-          onClick={() => this.props.publish(this.state.note)}
+          onClick={() => this.props.onSubmit(this.state.note)}
         >
-          Publish
+          Submit
         </button>
+        <button onClick={this.props.onCancel}>Cancel</button>
       </div>
     );
   }
