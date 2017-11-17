@@ -12,21 +12,15 @@ class Sidebar extends Component {
         </li>  
       );
     });
-
+    return list;
   }
-
-  // newNote() {
-  //   noteList.createElement(li) //same as other button (className?) //name of note
-  //   noteList.appendChild()
-  // }
 
   render() {
     return (
       <div className="sidebar column column-25">
-       <button className='button button' onClick={this.props.add}>+ new note</button>
-       <ul className='noteList'>
+        <ul className='noteList'>
           {this.renderList()}
-       </ul> 
+        </ul> 
       </div>
     );
   }
